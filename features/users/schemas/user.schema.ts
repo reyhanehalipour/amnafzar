@@ -1,9 +1,8 @@
 import { z } from "zod";
 
-/* ---------------- Create User ---------------- */
-
 export const createUserSchema = z.object({
   first_name: z.string().trim().min(1, "First name is required"),
+
   last_name: z.string().trim().min(1, "Last name is required"),
 
   email: z
@@ -45,34 +44,27 @@ export type CreateUserFormValues = z.infer<
   typeof createUserSchema
 >;
 
-export const defaultCreateUserValues: CreateUserFormValues =
-  {
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone: "",
-    department: "",
-    status: "active",
+export const defaultCreateUserValues: CreateUserFormValues = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  phone: "",
+  department: "",
+  status: "active",
+  roles: [],
+  profile: {
+    country: "",
+    city: "",
+    employee_id: "",
+  },
+};
 
-    roles: [],
-
-    profile: {
-      country: "",
-      city: "",
-      employee_id: "",
-    },
-  };
-
-/* ---------------- Update User ---------------- */
-
-export const updateUserSchema = z.object({
-  first_name: z.string(),
-  last_name: z.string(),
-  email: z.string().email(),
-  phone: z.string(),
-  department: z.string(),
-  status: z.enum(["active", "inactive"]),
-});
+/**
+ * PATCH schema
+ * تمام فیلدها اختیاری هستند.
+ */
+export const updateUserSchema =
+  createUserSchema.partial();
 
 export type UpdateUserFormValues = z.infer<
   typeof updateUserSchema

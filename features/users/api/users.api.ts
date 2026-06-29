@@ -1,7 +1,8 @@
-
-
 import { User, UserList } from "../types/user.types";
-import { UserFormValues } from "../schemas/user.schema";
+import {
+  CreateUserFormValues,
+  UpdateUserFormValues,
+} from "../schemas/user.schema";
 import { api } from "@/app/shared/api/axios";
 
 export const getUsers = async (
@@ -16,7 +17,7 @@ export const getUsers = async (
 };
 
 export const createUser = async (
-  payload: UserFormValues
+  payload: CreateUserFormValues
 ): Promise<User> => {
   const { data } = await api.post("/users", payload);
 
@@ -25,9 +26,8 @@ export const createUser = async (
 
 export const updateUser = async (
   id: number,
-  payload: Partial<User>
+  payload: UpdateUserFormValues
 ): Promise<User> => {
-
   console.log("PATCH CALLED", id, payload);
 
   const { data } = await api.patch(
